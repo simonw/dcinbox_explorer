@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>DC Inbox Demo</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
+	<body>
+	<div class="container">
+		<h1>DC Inbox Demo</h1>
+
+		<div class="row">
+			<div class="col-md-8">
+				<form action="/" method="GET">
+					<div class="input-group">
+						<input type="text" name="q" class="form-control" placeholder="Search for..." value="{{ q }}">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit">Go!</button>
+						</span>
+					</div>
+				</form>
+				<br>
+				<p>total: {{ total }}</p>
+				{% for doc in docs %}
+					<div><HR>
+						<a href="/email/{{ doc.meta.id }}/">{{ doc.Date }}</a><p>
+						<p>{{ doc.name }}</p>
+						<b>{{ doc.Subject }}</b><p>{{ doc.Body }}
+					</div>
+				{% endfor %}
+			</div>
+			<div class="col-md-4">
+				{% for facet in facets %}
+					<div class="panel panel-default">
+					  <div class="panel-heading">{{ facet.name }}</div>
+					  <div class="panel-body">
+						{% for value in facet.vals %}
+							<p><a href="{{ value.href }}">{{ value.value }}</a> - {{ value.count }}</p>
+						{% endfor %}
+					  </div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	</body>
+</html>
