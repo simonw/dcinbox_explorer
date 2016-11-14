@@ -125,10 +125,10 @@ class EmailSearch(FacetedSearch):
 
     facets = collections.OrderedDict((
         # use bucket aggregations to define facets
-        ('gender', TermsFacet(field='gender')),
         ('party', TermsFacet(field='party')),
         ('role_type', TermsFacet(field='role_type')),
         ('state', TermsFacet(field='state', size=60)),
+        ('gender', TermsFacet(field='gender')),
         ('name', TermsFacet(field='name', size=50)),
         ('publish_month', DateHistogramFacet(field='Date', interval='month')),
     ))
