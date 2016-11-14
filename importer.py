@@ -2,6 +2,7 @@ from elasticsearch.helpers import bulk
 from schema import Email
 import json
 import hashlib
+import urllib
 from es_connection import connections
 
 
@@ -40,7 +41,11 @@ def email_to_doc(data):
 
 
 def import_all_emails(filename='dataset.json'):
-    d = json.load(open(filename))
+    if filename.startswith('http://') or filename.startswith('https://'):
+        fp = urllib.urlopen(filename)
+    else:
+        fp = open(filename)
+    d = json.load(fp)
     import_emails(d)
 
 
