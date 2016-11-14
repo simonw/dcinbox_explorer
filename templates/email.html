@@ -13,8 +13,15 @@
 
 		<div class="row">
 			<div class="col-md-8">
+				Message from <a href="/?name={{ email.name|urlencode }}">{{ email.name }}</a> on {{ email.Date.strftime('%Y-%m-%d') }}<p>
+				<p>{{ email.Body }}</p>
 				<pre>{{ as_json }}</pre>
-				{{ email.__dict__ }}
+			</div>
+			<div class="col-md-4">
+				<h4>More like this</h4>
+				<p><a href="/?name={{ email.name|urlencode }}">{{ email.name }}</a></p>
+				<p><a href="/?party={{ email.party|urlencode }}">{{ email.party }}</a></p>
+				<p>State: <a href="/?state={{ email.state|urlencode }}">{{ email.state }}</a></p>
 			</div>
 		</div>
 	</div>

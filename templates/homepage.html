@@ -25,9 +25,8 @@
 				<p>total: {{ total }}</p>
 				{% for doc in docs %}
 					<div><HR>
-						<a href="/email/{{ doc.meta.id }}/">{{ doc.Date }}</a><p>
-						<p>{{ doc.name }}</p>
-						<b>{{ doc.Subject }}</b><p>{{ doc.Body }}
+						<a href="/email/{{ doc.meta.id }}/">Message from {{ doc.name }} on {{ doc.Date.strftime('%Y-%m-%d') }}</a><p>
+						<b>{{ doc.Subject }}</b><p>{{ doc.Body|truncate }} (<a href="/email/{{ doc.meta.id }}/">more</a>)
 					</div>
 				{% endfor %}
 			</div>
@@ -37,7 +36,7 @@
 					  <div class="panel-heading">{{ facet.name }}</div>
 					  <div class="panel-body">
 						{% for value in facet.vals %}
-							<p><a href="{{ value.href }}">{{ value.value }}</a> - {{ value.count }}</p>
+							<p><a class="btn {% if value.selected %}btn-primary{% else %}btn-default{% endif %}" href="{{ value.href }}">{{ value.value }} <span class="badge">{{ value.count }}</span></a></p>
 						{% endfor %}
 					  </div>
 					</div>
