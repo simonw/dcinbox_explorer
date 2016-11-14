@@ -20,6 +20,7 @@
 					<div class="input-group">
 						<input type="text" name="q" class="form-control" placeholder="Search for..." value="{{ q }}">
 						<span class="input-group-btn">
+							<a class="hidden-md btn btn-default" href="#filters"><span class="glyphicon glyphicon-filter" aria-hidden="true"></span></a>
 							<button class="btn btn-default" type="submit">Search</button>
 						</span>
 					</div>
@@ -33,7 +34,7 @@
 					</div>
 				{% endfor %}
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4" id="filters">
 				{% for facet in facets %}
 					<div class="panel panel-default facet-{{ facet.name }}">
 					  <div class="panel-heading">{{ facet.name }}</div>
