@@ -42,3 +42,8 @@ def email_to_doc(data):
 def import_all_emails(filename='dataset.json'):
     d = json.load(open(filename))
     import_emails(d)
+
+
+if __name__ == '__main__':
+    import sys
+    import_all_emails(sys.argv[-1])
