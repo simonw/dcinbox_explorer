@@ -6,18 +6,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>DC Inbox Demo</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script src="https://d3js.org/d3.v3.js"></script>
+		<script src="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/novus/nvd3/v1.8.1/build/nv.d3.css">
 	</head>
 	<body>
 	<div class="container">
 		<h1>DC Inbox Demo</h1>
-
+		<div id="chart"></div>
 		<div class="row">
 			<div class="col-md-8">
 				<form action="/" method="GET">
 					<div class="input-group">
 						<input type="text" name="q" class="form-control" placeholder="Search for..." value="{{ q }}">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="submit">Go!</button>
+							<button class="btn btn-default" type="submit">Search</button>
 						</span>
 					</div>
 				</form>
@@ -32,11 +35,11 @@
 			</div>
 			<div class="col-md-4">
 				{% for facet in facets %}
-					<div class="panel panel-default">
+					<div class="panel panel-default facet-{{ facet.name }}">
 					  <div class="panel-heading">{{ facet.name }}</div>
 					  <div class="panel-body">
 						{% for value in facet.vals %}
-							<p><a class="btn {% if value.selected %}btn-primary{% else %}btn-default{% endif %}" href="{{ value.href }}">{{ value.value }} <span class="badge">{{ value.count }}</span></a></p>
+							<p class="facet-value"><a class="btn {% if value.selected %}btn-primary{% else %}btn-default{% endif %}" href="{{ value.href }}">{{ value.value }} <span class="badge">{{ value.count }}</span></a></p>
 						{% endfor %}
 					  </div>
 					</div>
@@ -44,6 +47,51 @@
 			</div>
 		</div>
 	</div>
+	<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<script>
+jQuery(function($) {
+	var graph_data = [];
+	$('.facet-publish_month .facet-value').each(function() {
+		var clone = $(this).clone();
+		var value = parseInt(clone.find('.badge').text(), 10);
+		clone.find('.badge').remove();
+		var label = $.trim(clone.text());
+		graph_data[graph_data.length] = {
+			"x": label,
+			"y": value
+		}
+	});
 
+	var chartData = [{
+		key: "Emails by month",
+		values: graph_data
+	}];
+
+	$('#chart').append($('<svg style="height:180px"></svg>'));
+
+	nv.addGraph(function() {
+		var chart = nv.models.multiBarChart()
+			.reduceXTicks(true) // Don't render all x axes
+			.rotateLabels(0)
+			.showControls(false)
+			.groupSpacing(0.1)
+		;
+		chart.xAxis
+			.tickFormat(function(d) {
+				return d;
+			});
+		chart.yAxis
+			.tickFormat(d3.format('d'));
+		d3.select('#chart svg')
+			.datum(chartData)
+			.call(chart);
+		nv.utils.windowResize(chart.update);
+		return chart;
+	});
+});
+</script>
 	</body>
 </html>
