@@ -1,4 +1,4 @@
-from elasticsearch.helpers import bulk
+from elasticsearch.helpers import streaming_bulk
 from schema import Email
 import json
 import hashlib
@@ -6,22 +6,15 @@ import urllib
 from es_connection import connections
 
 
-def bulk_index(docs):
-    return bulk(connections.get_connection('default'),
-        (d.to_dict(include_meta=True) for d in docs)
-    )
-
-
-def import_emails(emails, batch_size=100):
-    # We go batch_size at a time
-    collected = []
-    for email in emails:
-        collected.append(email)
-        if len(collected) == batch_size:
-            print bulk_index(email_to_doc(email) for email in collected)
-            collected = []
-    if collected:
-        bulk_index(email_to_doc(email) for email in collected)
+def import_emails(emails):
+    done = 0
+    for report in streaming_bulk(connections.get_connection('default'), (
+        email_to_doc(email).to_dict(include_meta=True)
+        for email in emails
+    )):
+        done += 1
+        if done % 500 == 0:
+            print "Done %d" % done
 
 
 def email_to_doc(data):
