@@ -30,6 +30,13 @@ Then install the dependencies:
 
     pip install -r requirements.txt
 
+Next, initialize the Elasticsearch index:
+
+    ELASTICSEARCH_HOST='localhost' \
+    ELASTICSEARCH_PORT=9200 \
+    ELASTICSEARCH_AUTH='' \
+    venv/bin/python script_create_index.py
+
 Now you can run the development server using:
 
     ELASTICSEARCH_HOST='localhost' \
