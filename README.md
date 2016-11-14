@@ -60,6 +60,8 @@ Then run the following:
     ELASTICSEARCH_AUTH='' \
     venv/bin/python importer.py dataset.json
 
+The importer script can accept a URL instead of a filename.
+
 ## Hosting
 
 The app is ready to host on Heroku - it has the necessary Procfile already in
@@ -70,3 +72,11 @@ environment variables like so:
     heroku config:set ELASTICSEARCH_PORT=9243
     heroku config:set ELASTICSEARCH_AUTH='user:password'
     heroku config:set ELASTICSEARCH_USE_SSL=1
+
+Once you have deployed to Heroku you can configure the index like so:
+
+    heroku run python script_create_index.py
+
+And even kick off a full dataset import like so:
+
+    heroku run python importer.py http://web.stevens.edu/dcinbox/dataset.json
