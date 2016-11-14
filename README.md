@@ -3,6 +3,8 @@
 A Flask+Elasticsearch UI for exploring the DC Inbox dataset from
 http://web.stevens.edu/dcinbox/Home.html
 
+See it in action at https://dcinbox.herokuapp.com/
+
 ## Background
 
 DC Inbox is a collection of over 60,000 official e-newsletters sent from
