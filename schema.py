@@ -128,8 +128,8 @@ class EmailSearch(FacetedSearch):
         ('gender', TermsFacet(field='gender')),
         ('party', TermsFacet(field='party')),
         ('role_type', TermsFacet(field='role_type')),
-        ('state', TermsFacet(field='state')),
-        ('name', TermsFacet(field='name')),
+        ('state', TermsFacet(field='state', size=60)),
+        ('name', TermsFacet(field='name', size=50)),
         ('publish_month', DateHistogramFacet(field='Date', interval='month')),
     ))
 
