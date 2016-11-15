@@ -1,0 +1,17 @@
+version: "2"
+services:
+  web:
+    build: .
+    volumes:
+     - "./:/usr/src/app"
+    links:
+     - "elasticsearch"
+    environment:
+      ELASTICSEARCH_HOST: "elasticsearch"
+      ELASTICSEARCH_PORT: "9200"
+      ELASTICSEARCH_AUTH: ""
+      FLASK_DEBUG: "1"
+    ports:
+     - "5000:5000"
+  elasticsearch:
+    image: "elasticsearch:5"
