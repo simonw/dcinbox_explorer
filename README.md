@@ -17,6 +17,24 @@ the dataset into Elasticsearch.
 
 ## Development environment
 
+### Docker
+
+First, install [Docker for Mac](https://docs.docker.com/docker-for-mac/) or [Docker for Windows](https://docs.docker.com/docker-for-windows/).
+
+Next, clone this repository and import some data:
+
+    $ docker-compose run web python importer.py http://web.stevens.edu/dcinbox/dataset.json
+
+This will build an image for the web app, boot up an Elasticsearch server, and import the data into it.
+
+Now you can run the development server using:
+
+    $ docker-compose up --build
+
+The site should be available on [http://localhost:5000/](http://localhost:5000)
+
+### Manual
+
 You'll need an Elasticsearch server. The easiest way to get this is to
 download Elasticsearch 5 from https://www.elastic.co/downloads/elasticsearch
 then extract the archive and run it locally using bin/elasticsearch
@@ -48,12 +66,10 @@ Now you can run the development server using:
     FLASK_DEBUG=1 \
     venv/bin/flask run
 
-The site should be available on http://localhost:5000/
+The site should be available on [http://localhost:5000/](http://localhost:5000)
 
-## Importing the data
-
-First, download the dataset from http://web.stevens.edu/dcinbox/dataset.json
-(around 250MB).
+To import the data, download the dataset from 
+http://web.stevens.edu/dcinbox/dataset.json (around 250MB).
 
 Then run the following:
 

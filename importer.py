@@ -35,6 +35,7 @@ def email_to_doc(data):
 
 def import_all_emails(filename='dataset.json'):
     if filename.startswith('http://') or filename.startswith('https://'):
+        print "Downloading %s... (this may take a few minutes)" % filename
         fp = urllib.urlopen(filename)
     else:
         fp = open(filename)
