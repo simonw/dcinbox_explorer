@@ -6,7 +6,7 @@ decorator==4.0.10
 elasticsearch==5.0.1
 elasticsearch-dsl==5.0.0
 enum34==1.1.6
-Flask==0.11.1
+Flask==1.0
 gunicorn==19.6.0
 ipython==5.1.0
 ipython-genutils==0.1.0
